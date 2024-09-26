@@ -4,6 +4,7 @@ using NetworkUtility.Ping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -63,6 +64,25 @@ namespace NetworkUtility.Tests.PingTest
 
             // Assert
             result.Should().BeOnOrAfter(25.September(2024));
+        }
+
+        [Fact]
+
+        public void Networkervice_GetPingOptions() 
+        {
+            // Arrange
+            var expected = new PingOptions()
+            {
+                DontFragment = true,
+                Ttl = 1
+            };
+            // Act
+            var result = _pingService.GetPingOptions();
+
+            // Assert
+            result.Should().BeOfType<PingOptions>();
+            result.Should().BeEquivalentTo(expected);
+            result.Ttl.Should().Be(expected.Ttl);
         }
 
 
